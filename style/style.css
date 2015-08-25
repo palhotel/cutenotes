@@ -1,0 +1,29 @@
+﻿*{
+    margin:0;
+    padding:0;   
+}
+body {
+    height:100%;
+}
+html{
+    height:100%;
+}
+.main{
+    width:100%;
+    height:100%;
+    font-size:0px;
+}
+.left{
+    width:20%;
+    height:100%;
+    background:#ccccff;
+    display:inline-block;
+    font-size:18px;
+}
+.right{
+    width:80%;
+    height:100%;
+    background:#ccffcc;
+    display:inline-block;
+    font-size:18px;
+}
