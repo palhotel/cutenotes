@@ -27,3 +27,53 @@ window.addEventListener('scroll', function(){
 		elem.style.backgroundSize = '100% 100%';
 	}
 }, true);
+
+
+$(document).ready(function () {
+    $(".tempgauge").tempGauge({
+        borderColor: "#adadad",
+        borderWidth: 4,
+        defaultTemp: 33,
+        fillColor: "#dca943",
+        labelSize: 12,
+        labelColor: "black",
+        maxTemp: 60,
+        minTemp: -20,
+        showLabel: true,
+		showScale: true,
+        width: 200
+    });
+
+	$('.notes-left .title').click(function(){
+		if($('.left').width() < $('body').width() * 0.2){
+			$('.right').css({width : '80%'});
+			$('.left').animate({width : '20%'}, 100);
+		} else {
+			$('.left').animate({width : '4%'}, 300);
+			$('.right').animate({width : '96%'}, 300);
+		}
+
+	});
+
+	//平滑跳转到锚点
+	$('a[href*=#],area[href*=#]').click(function() {
+		if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+			var $target = $(this.hash);
+			$target = $target || $('[name=' + this.hash.slice(1) + ']');
+			if ($target && $target.length) {
+				var targetOffset = $target.offset().top;
+				$('html,body').animate({
+						scrollTop: targetOffset
+					},
+					1000);
+				return false;
+			}
+		}
+	});
+
+	$('.btn-panel').click(function(){
+		$(this).dzPanel.togglePanel();
+	});
+
+
+});

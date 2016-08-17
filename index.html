@@ -3,6 +3,9 @@
 <head>
     <title>our notes</title>
     <link href="style/style.css" rel="stylesheet" />
+    <script src="scripts/jquery-1.7.1.js"></script>
+    <script src="scripts/jquery.tempgauge.js"></script>
+    <script src="scripts/jquery.dzpanel.js"></script>
     <script src="scripts/custom.js"></script>
 </head>
 <body>
@@ -11,7 +14,7 @@
         <div class="left">
             <div class="notes-left">
                 <p>
-                    <p><label><h2>cutenotes</h2></label></p>
+                    <h2 class="title">cutenotes</h2>
                     <p><label><input type="text"></label></p>
                 </p>
             </div>
@@ -20,22 +23,15 @@
                 <p>
                 <h3>links</h3>
                 摘要
+                    <a href="#earth">跳转</a>
+                    <button class="btn-panel">显示侧边栏</button>
                 </p>
             </div>
-
         </div>
         <div class="right">
 
             <div class = "notes-content">
-                <p>
-                <h2>links</h2>
-                </p>
-                <hr/><br/>
-                <p>
-                <p><a href="http://blog.csdn.net/quicknet/article/details/20286075">http://blog.csdn.net/quicknet/article/details/20286075</a></p>
-                <p><a href="http://www.zhangxinxu.com/wordpress/2013/12/iebetter-js-make-ie6-ie8-like-modern-browser-ie9-chrome/">IEbetter</a></p>
-                <p><a href="http://htmlpreview.github.io/">github htmlpreivew</a></p>
-                </p>
+               <div class="tempgauge">33</div>
             </div>
 
         </div>
@@ -46,9 +42,15 @@
         <img src="image/mul.jpg" style="position:absolute;top:0;left:0;opacity:0.0;width: 200px"/>
     </div>
 </section>
-<section class="story3 section">
+<section class="story3 section" id="earth">
     <div class="main">
     </div>
+</section>
+
+<section class="dz-panel">
+    <div class="header">我的panel</div>
+    <div class="main">我的内容</div>
+    <div class="footer">我的footer</div>
 </section>
 </body>
 </html>
