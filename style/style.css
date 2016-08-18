@@ -85,4 +85,40 @@ body {
 
 .notes-left .title {
     cursor: pointer;
+    line-height: 50px;
+    height: 50px;
+    font-size: 28px;
+    font-weight: bold;
+    background: url("../image/bear.png") 0px 0px no-repeat;
+    background-size: 50px 50px;
+    text-indent: 50px;
+}
+
+.fix-nav {
+    position: fixed;
+    width: 600px;
+    margin: 0 auto;
+    border: 2px solid #c9c9c9;
+    height: 60px;
+    top: 20px;
+    left: 28%;
+    z-index: 10;
+}
+
+.fix-nav li {
+    display: inline-block;
+    width: 100px;
+    height: 60px;
+    line-height: 60px;
+    cursor:pointer;
+    text-align: center;
+    color: #cecece;
+}
+.fix-nav li:hover {
+    color: #ffff99;
+}
+
+.fix-nav li.active{
+    background:#99ff99;
+    color: #ffffff;
 }

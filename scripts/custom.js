@@ -4,9 +4,7 @@ window.addEventListener('scroll', function(){
 	var ele = document.getElementsByTagName('img')[0];
 	var elem = document.getElementsByClassName('story3')[0];
 
-	if(scrollTop && scrollTop > 500 && scrollTop < 1200){
-
-
+	if(scrollTop && scrollTop > window.innerHeight && scrollTop < window.innerHeight * 2){
 		ele.classList.add('trans-animate');
 		ele.style.left = '80%';
 		ele.style.top = '60%';
@@ -75,5 +73,16 @@ $(document).ready(function () {
 		$(this).dzPanel.togglePanel();
 	});
 
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		$('li').removeClass('active');
+		if(scrollTop < $(window).innerHeight()){
+			$('li').get(0).classList += 'active';
+		} else if(scrollTop < $(window).innerHeight() * 2){
+			$('li').get(1).classList += 'active';
+		} else if(scrollTop < $(window).innerHeight() * 3){
+			$('li').get(2).classList += 'active';
+		}
+	})
 
 });
