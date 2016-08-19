@@ -41,6 +41,7 @@ $(document).ready(function () {
 		showScale: true,
         width: 200
     });
+	$('#magazine').turn({gradients: true, acceleration: true});
 
 	$('.notes-left .title').click(function(){
 		if($('.left').width() < $('body').width() * 0.2){
@@ -63,7 +64,7 @@ $(document).ready(function () {
 				$('html,body').animate({
 						scrollTop: targetOffset
 					},
-					1000);
+					500);
 				return false;
 			}
 		}
@@ -76,12 +77,14 @@ $(document).ready(function () {
 	$(window).scroll(function(){
 		var scrollTop = $(window).scrollTop();
 		$('li').removeClass('active');
-		if(scrollTop < $(window).innerHeight()){
+		if(scrollTop < $(window).innerHeight() -2){
 			$('li').get(0).classList += 'active';
-		} else if(scrollTop < $(window).innerHeight() * 2){
+		} else if(scrollTop < $(window).innerHeight() * 2 - 2){
 			$('li').get(1).classList += 'active';
-		} else if(scrollTop < $(window).innerHeight() * 3){
+		} else if(scrollTop < $(window).innerHeight() * 3 - 2){
 			$('li').get(2).classList += 'active';
+		} else if(scrollTop < $(window).innerHeight() * 4 - 2){
+			$('li').get(3).classList += 'active';
 		}
 	})
 

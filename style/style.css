@@ -4,15 +4,16 @@
 }
 
 html{
-    height:300%;
+    height:400%;
     position:relative;
 }
 body {
     height:100%;
 }
 .section{
-    height: 33.333%;
+    height: 25%;
     position:relative;
+    overflow: hidden;
 }
 .story1 .main{
     width:100%;
@@ -121,4 +122,28 @@ body {
 .fix-nav li.active{
     background:#99ff99;
     color: #ffffff;
+}
+
+.fix-nav li a {
+    text-decoration: none;
+    color:#9c9c9c;
+    line-height: 60px;
+    height: 60px;
+    width: 100%;
+    display:block;
+}
+.story4 .main{
+    width:100%;
+    height:600px;
+    background: #77ccff;
+    padding: 100px 0;
+}
+#magazine{
+    width: 800px;
+    height: 400px;
+    margin:0 auto;
+    border: 1px solid #7f7f7f;
+}
+#magazine .turn-page{
+    background-color:#ccc;
 }
