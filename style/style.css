@@ -134,7 +134,7 @@ body {
 }
 .story4 .main{
     width:100%;
-    height:600px;
+    height:100%;
     background: #77ccff;
     padding: 100px 0;
 }
@@ -146,4 +146,28 @@ body {
 }
 #magazine .turn-page{
     background-color:#ccc;
+}
+.story5 .main{
+    width:100%;
+    height:100%;
+    background: #efefef;
+}
+.story5 .main .list{
+    border: 1px solid #0099ff;
+    -webkit-box-shadow: 2px 2px;
+    -moz-box-shadow: 2px 2px;
+    box-shadow: 2px 2px;
+    padding: 22px;
+    cursor: pointer;
+}
+
+.story5 .main .list{
+    transition: 0.5s linear all;
+}
+
+.story5 .main .list.ng-leave{
+    opacity: 1;
+}
+.story5 .main .list.ng-leave-active{
+    opacity: 0;
 }

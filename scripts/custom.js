@@ -73,19 +73,17 @@ $(document).ready(function () {
 	$('.btn-panel').click(function(){
 		$(this).dzPanel.togglePanel();
 	});
-
+//滚动监听
 	$(window).scroll(function(){
 		var scrollTop = $(window).scrollTop();
-		$('li').removeClass('active');
-		if(scrollTop < $(window).innerHeight() -2){
-			$('li').get(0).classList += 'active';
-		} else if(scrollTop < $(window).innerHeight() * 2 - 2){
-			$('li').get(1).classList += 'active';
-		} else if(scrollTop < $(window).innerHeight() * 3 - 2){
-			$('li').get(2).classList += 'active';
-		} else if(scrollTop < $(window).innerHeight() * 4 - 2){
-			$('li').get(3).classList += 'active';
+		var winHeight = $(window).innerHeight();
+		var idx = parseInt((scrollTop + 2)/winHeight);
+		if( !$($('li').get(idx)).hasClass('active') ){
+			$('li').removeClass('active');
+			$('li').get(idx).classList += 'active';
 		}
+
+
 	})
 
 });

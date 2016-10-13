@@ -4,10 +4,16 @@
     <title>our notes</title>
     <link href="style/style.css" rel="stylesheet" />
     <script src="scripts/jquery-1.7.1.js"></script>
+    <script src="scripts/lodash.js"></script>
     <script src="scripts/jquery.tempgauge.js"></script>
     <script src="scripts/jquery.dzpanel.js"></script>
     <script src="scripts/custom.js"></script>
     <script src="scripts/turn.js"></script>
+    <script src="scripts/ng/angular.js"></script>
+    <script src="scripts/ng/angular-animate.js"></script>
+    <script src="scripts/ng/angular-route.js"></script>
+    <script src="scripts/ng/angular-touch.js"></script>
+    <script src="scripts/ng/app.js"></script>
 </head>
 <body>
 <section class="fix-nav">
@@ -16,6 +22,7 @@
         <li><a href="#car">车联网</a></li>
         <li><a href="#earth">地球</a></li>
         <li><a href="#ebook">电子书</a></li>
+        <li><a href="#angulartest">列表</a> </li>
     </ul>
 </section>
 <section class="story1 section" id="temp">
@@ -63,6 +70,11 @@
             <div><img src="image/pop01-blur.png" width="400px" height="400px"/> </div>
             <div><div><img src="image/bear.png" width="200px"/> </div></div>
         </div>
+    </div>
+</section>
+<section class="story5 section" id="angulartest">
+    <div class="main" ng-app="myapp" ng-controller="mainController">
+        <div class="list" ng-repeat="item in list" ng-click="remove($index);">Name:{{item.name}}, Age:{{item.age}}</div>
     </div>
 </section>
 
