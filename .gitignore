@@ -213,3 +213,5 @@ ModelManifest.xml
 
 #Intellij IDEA
 .idea/
+#node.js
+node_modules/

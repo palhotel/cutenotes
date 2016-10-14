@@ -1,4 +1,5 @@
-
+new Image().src='image/pop01.png';
+new Image().src='image/pop01-blur.png';
 window.addEventListener('scroll', function(){
 	var scrollTop = window.scrollY;
 	var ele = document.getElementsByTagName('img')[0];
@@ -6,7 +7,7 @@ window.addEventListener('scroll', function(){
 
 	if(scrollTop && scrollTop > window.innerHeight && scrollTop < window.innerHeight * 2){
 		ele.classList.add('trans-animate');
-		ele.style.left = '80%';
+		ele.style.left = '60%';
 		ele.style.top = '60%';
 		ele.style.opacity = 1.0;
 		setTimeout(function(){
@@ -84,6 +85,12 @@ $(document).ready(function () {
 		}
 
 
-	})
+	});
+//开关
+	$('.switch').toggle(function(){
+		$(this).addClass('on');
+	}, function(){
+		$(this).removeClass('on');
+	});
 
 });

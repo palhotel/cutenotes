@@ -15,9 +15,11 @@ body {
     position:relative;
     overflow: hidden;
 }
-.story1 .main{
+.main{
     width:100%;
     height:100%;
+}
+.story1 .main{
     font-size:0;
     background:#ccffcc;
 }
@@ -97,13 +99,14 @@ body {
 
 .fix-nav {
     position: fixed;
-    width: 600px;
+    width: 60%;
     margin: 0 auto;
     border: 2px solid #c9c9c9;
     height: 60px;
     top: 20px;
-    left: 28%;
+    left: 20%;
     z-index: 10;
+    box-shadow: 0 10px 8px;
 }
 
 .fix-nav li {
@@ -133,14 +136,12 @@ body {
     display:block;
 }
 .story4 .main{
-    width:100%;
-    height:100%;
     background: #77ccff;
     padding: 100px 0;
 }
 #magazine{
-    width: 800px;
-    height: 400px;
+    width: 50%;
+    height: 80%;
     margin:0 auto;
     border: 1px solid #7f7f7f;
 }
@@ -148,8 +149,6 @@ body {
     background-color:#ccc;
 }
 .story5 .main{
-    width:100%;
-    height:100%;
     background: #efefef;
 }
 .story5 .main .list{
@@ -170,4 +169,69 @@ body {
 }
 .story5 .main .list.ng-leave-active{
     opacity: 0;
+}
+.story6 .main{
+    background: #ccffcc;
+    padding: 120px 0;
+}
+.story6 .iphone {
+    width:271px;
+    height:526px;
+    background: url('../image/iphone4.png') no-repeat;
+    background-color: transparent;
+    margin:0 auto;
+    padding:0;
+    text-align: center;
+}
+.story6 .iphone .switch{
+    margin: 200px auto;
+    width:120px;
+    height:40px;
+    border:none;
+    background: #dedede;
+    border-radius: 20px 20px;
+    cursor:pointer;
+    transition: 0.5s linear all;
+    position:relative;
+}
+.story6 .iphone button:focus{
+    outline: none;
+}
+.story6 .iphone .switch.on {
+    background: #ffffff;
+}
+
+.story6 .iphone .ball{
+    width:40px;
+    height:40px;
+    border-radius: 20px 20px;
+    background: #ffffff;
+    display: block;
+    transition: 0.3s linear all;
+    position: absolute;
+    left:0;
+    top:0;
+}
+.story6 .iphone .on .ball{
+    top:0;
+    left:80px;
+    background: #33ff33;
+}
+.story7 .main{
+    background: #33ddcc;
+    padding:160px 0;
+}
+#color-draft{
+    margin:0 auto;
+    padding:0;
+    width:80%;
+    height: 60%;
+    background: #ffffff;
+    border:1px solid #333333;
+    box-shadow:0 4px 4px;
+}
+#color-picker{
+ position:absolute;
+    left:300px;
+    top:300px;
 }
