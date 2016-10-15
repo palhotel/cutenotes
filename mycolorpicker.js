@@ -14,9 +14,9 @@ class ColorfulEditorExample extends React.Component {
         this.focus = () => this.refs.editor.focus();
         this.onChange = (editorState) => this.setState({editorState});
         this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
+        this.changeColor = (color) => this._changeColor(color);
     }
-
-    _toggleColor(toggledColor) {
+    _changeColor(toggledColor){
         const {editorState} = this.state;
         const selection = editorState.getSelection();
 
@@ -33,6 +33,7 @@ class ColorfulEditorExample extends React.Component {
         );
 
         const currentStyle = editorState.getCurrentInlineStyle();
+
         // Unset style override for current color.
         if (selection.isCollapsed()) {
             nextEditorState = currentStyle.reduce((state, color) => {
@@ -40,7 +41,7 @@ class ColorfulEditorExample extends React.Component {
             }, nextEditorState);
         }
 
-        // If the color is being toggled on, apply it.这里是添加样式的地方
+        // If the color is being toggled on, apply it.
         if (!currentStyle.has(toggledColor)) {
             nextEditorState = RichUtils.toggleInlineStyle(
                 nextEditorState,
@@ -49,20 +50,17 @@ class ColorfulEditorExample extends React.Component {
         }
 
         this.onChange(nextEditorState);
+
     }
 
     render() {
         const {editorState} = this.state;
         return (
             <div style={styles.root}>
-                <ColorControls
-                    editorState={editorState}
-                    onToggle={this.toggleColor}
-                />
                 <MyColorPickerBtn
                     editorState={editorState}
-                    onToggle={this.toggleColor}
                     onClose={this.focus}
+                    onChangeColor = {this.changeColor}
                 />
                 <div style={styles.editor} onClick={this.focus}>
                     <Editor
@@ -79,86 +77,11 @@ class ColorfulEditorExample extends React.Component {
 
 }
 
-class StyleButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onToggle = (e) => {
-            e.preventDefault();
-            console.log(this.props.style);
-            this.props.onToggle(this.props.style);
-        };
-    }
-
-    render() {
-        let style;
-        if (this.props.active) {
-            style = {...styles.styleButton, ...colorStyleMap[this.props.style]};
-        } else {
-            style = styles.styleButton;
-        }
-
-        return (
-            <span style={style} onMouseDown={this.onToggle}>
-            {this.props.label}
-            </span>
-        );
-    }
-}
-
-var COLORS = [
-    {label: 'Red', style: 'red'},
-    {label: 'Orange', style: 'orange'},
-    {label: 'Yellow', style: 'yellow'},
-    {label: 'Green', style: 'green'},
-    {label: 'Blue', style: 'blue'},
-    {label: 'Indigo', style: 'indigo'},
-    {label: 'Violet', style: 'violet'},
-];
-//定义了一组jsx标签,相当于class
-const ColorControls = (props) => {
-    var currentStyle = props.editorState.getCurrentInlineStyle();
-    return (
-        <div style={styles.controls}>
-
-        {COLORS.map(type =>
-                <StyleButton
-                    key={type.label}
-                    active={currentStyle.has(type.style)}
-                    label={type.label}
-                    onToggle={props.onToggle}
-                    style={type.style}
-                />
-        )}
-
-        </div>
-    );
-};
 
 // This object provides the styling information for our custom color
 // styles.
 var colorStyleMap = {
-    red: {
-        color: 'rgba(255, 0, 0, 1.0)',
-    },
-    orange: {
-        color: 'rgba(255, 127, 0, 1.0)',
-    },
-    yellow: {
-        color: 'rgba(180, 180, 0, 1.0)',
-    },
-    green: {
-        color: 'rgba(0, 180, 0, 1.0)',
-    },
-    blue: {
-        color: 'rgba(0, 0, 255, 1.0)',
-    },
-    indigo: {
-        color: 'rgba(75, 0, 130, 1.0)',
-    },
-    violet: {
-        color: 'rgba(127, 0, 255, 1.0)',
-    },
-    mine: {
+    color0000: {
         color: 'rgba(0,0,0,1.0)'
     }
 };
@@ -177,18 +100,6 @@ const styles = {
         marginTop: 20,
         minHeight: 400,
         paddingTop: 20,
-    },
-    controls: {
-        fontFamily: '\'Helvetica\', sans-serif',
-        fontSize: 14,
-        marginBottom: 10,
-        userSelect: 'none',
-    },
-    styleButton: {
-        color: '#999',
-        cursor: 'pointer',
-        marginRight: 16,
-        padding: '2px 0',
     }
 };
 
@@ -208,17 +119,15 @@ class MyColorPickerBtn extends React.Component {
     }
 
     handleChangeComplete(color){
-        colorStyleMap.mine.color = color.hex;
+        colorStyleMap['color'+color.hex.slice(1)] = {color: color.hex};
         this.setState({ textColor: color.hex});
         this.props.onClose();
-        this.props.onToggle('mine');
-
+        this.props.onChangeColor('color'+color.hex.slice(1));
     }
 
     handleClick(){
         this.setState({ pickerShow: !this.state.pickerShow });
         this.props.onClose();
-        this.props.onToggle('mine');
     };
 
 

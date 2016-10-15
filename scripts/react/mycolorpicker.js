@@ -1,8 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -48,12 +46,15 @@ var ColorfulEditorExample = function (_React$Component) {
         _this.toggleColor = function (toggledColor) {
             return _this._toggleColor(toggledColor);
         };
+        _this.changeColor = function (color) {
+            return _this._changeColor(color);
+        };
         return _this;
     }
 
     _createClass(ColorfulEditorExample, [{
-        key: '_toggleColor',
-        value: function _toggleColor(toggledColor) {
+        key: '_changeColor',
+        value: function _changeColor(toggledColor) {
             var editorState = this.state.editorState;
 
             var selection = editorState.getSelection();
@@ -66,6 +67,7 @@ var ColorfulEditorExample = function (_React$Component) {
             var nextEditorState = _draftJs.EditorState.push(editorState, nextContentState, 'change-inline-style');
 
             var currentStyle = editorState.getCurrentInlineStyle();
+
             // Unset style override for current color.
             if (selection.isCollapsed()) {
                 nextEditorState = currentStyle.reduce(function (state, color) {
@@ -73,7 +75,7 @@ var ColorfulEditorExample = function (_React$Component) {
                 }, nextEditorState);
             }
 
-            // If the color is being toggled on, apply it.这里是添加样式的地方
+            // If the color is being toggled on, apply it.
             if (!currentStyle.has(toggledColor)) {
                 nextEditorState = _draftJs.RichUtils.toggleInlineStyle(nextEditorState, toggledColor);
             }
@@ -88,14 +90,10 @@ var ColorfulEditorExample = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { style: styles.root },
-                _react2.default.createElement(ColorControls, {
-                    editorState: editorState,
-                    onToggle: this.toggleColor
-                }),
                 _react2.default.createElement(MyColorPickerBtn, {
                     editorState: editorState,
-                    onToggle: this.toggleColor,
-                    onClose: this.focus
+                    onClose: this.focus,
+                    onChangeColor: this.changeColor
                 }),
                 _react2.default.createElement(
                     'div',
@@ -115,87 +113,12 @@ var ColorfulEditorExample = function (_React$Component) {
     return ColorfulEditorExample;
 }(_react2.default.Component);
 
-var StyleButton = function (_React$Component2) {
-    _inherits(StyleButton, _React$Component2);
-
-    function StyleButton(props) {
-        _classCallCheck(this, StyleButton);
-
-        var _this2 = _possibleConstructorReturn(this, (StyleButton.__proto__ || Object.getPrototypeOf(StyleButton)).call(this, props));
-
-        _this2.onToggle = function (e) {
-            e.preventDefault();
-            console.log(_this2.props.style);
-            _this2.props.onToggle(_this2.props.style);
-        };
-        return _this2;
-    }
-
-    _createClass(StyleButton, [{
-        key: 'render',
-        value: function render() {
-            var style = void 0;
-            if (this.props.active) {
-                style = _extends({}, styles.styleButton, colorStyleMap[this.props.style]);
-            } else {
-                style = styles.styleButton;
-            }
-
-            return _react2.default.createElement(
-                'span',
-                { style: style, onMouseDown: this.onToggle },
-                this.props.label
-            );
-        }
-    }]);
-
-    return StyleButton;
-}(_react2.default.Component);
-
-var COLORS = [{ label: 'Red', style: 'red' }, { label: 'Orange', style: 'orange' }, { label: 'Yellow', style: 'yellow' }, { label: 'Green', style: 'green' }, { label: 'Blue', style: 'blue' }, { label: 'Indigo', style: 'indigo' }, { label: 'Violet', style: 'violet' }];
-//定义了一组jsx标签,相当于class
-var ColorControls = function ColorControls(props) {
-    var currentStyle = props.editorState.getCurrentInlineStyle();
-    return _react2.default.createElement(
-        'div',
-        { style: styles.controls },
-        COLORS.map(function (type) {
-            return _react2.default.createElement(StyleButton, {
-                key: type.label,
-                active: currentStyle.has(type.style),
-                label: type.label,
-                onToggle: props.onToggle,
-                style: type.style
-            });
-        })
-    );
-};
-
 // This object provides the styling information for our custom color
 // styles.
+
+
 var colorStyleMap = {
-    red: {
-        color: 'rgba(255, 0, 0, 1.0)'
-    },
-    orange: {
-        color: 'rgba(255, 127, 0, 1.0)'
-    },
-    yellow: {
-        color: 'rgba(180, 180, 0, 1.0)'
-    },
-    green: {
-        color: 'rgba(0, 180, 0, 1.0)'
-    },
-    blue: {
-        color: 'rgba(0, 0, 255, 1.0)'
-    },
-    indigo: {
-        color: 'rgba(75, 0, 130, 1.0)'
-    },
-    violet: {
-        color: 'rgba(127, 0, 255, 1.0)'
-    },
-    mine: {
+    color0000: {
         color: 'rgba(0,0,0,1.0)'
     }
 };
@@ -214,56 +137,43 @@ var styles = {
         marginTop: 20,
         minHeight: 400,
         paddingTop: 20
-    },
-    controls: {
-        fontFamily: '\'Helvetica\', sans-serif',
-        fontSize: 14,
-        marginBottom: 10,
-        userSelect: 'none'
-    },
-    styleButton: {
-        color: '#999',
-        cursor: 'pointer',
-        marginRight: 16,
-        padding: '2px 0'
     }
 };
 
 /*zhangda add color picker*/
 
-var MyColorPickerBtn = function (_React$Component3) {
-    _inherits(MyColorPickerBtn, _React$Component3);
+var MyColorPickerBtn = function (_React$Component2) {
+    _inherits(MyColorPickerBtn, _React$Component2);
 
     function MyColorPickerBtn(props) {
         _classCallCheck(this, MyColorPickerBtn);
 
-        var _this3 = _possibleConstructorReturn(this, (MyColorPickerBtn.__proto__ || Object.getPrototypeOf(MyColorPickerBtn)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (MyColorPickerBtn.__proto__ || Object.getPrototypeOf(MyColorPickerBtn)).call(this, props));
 
-        _this3.state = {
+        _this2.state = {
             textColor: '#000',
             pickerShow: false
         };
 
         //解决this为null
-        _this3.handleChangeComplete = _this3.handleChangeComplete.bind(_this3);
-        _this3.handleClick = _this3.handleClick.bind(_this3);
-        return _this3;
+        _this2.handleChangeComplete = _this2.handleChangeComplete.bind(_this2);
+        _this2.handleClick = _this2.handleClick.bind(_this2);
+        return _this2;
     }
 
     _createClass(MyColorPickerBtn, [{
         key: 'handleChangeComplete',
         value: function handleChangeComplete(color) {
-            colorStyleMap.mine.color = color.hex;
+            colorStyleMap['color' + color.hex.slice(1)] = { color: color.hex };
             this.setState({ textColor: color.hex });
             this.props.onClose();
-            this.props.onToggle('mine');
+            this.props.onChangeColor('color' + color.hex.slice(1));
         }
     }, {
         key: 'handleClick',
         value: function handleClick() {
             this.setState({ pickerShow: !this.state.pickerShow });
             this.props.onClose();
-            this.props.onToggle('mine');
         }
     }, {
         key: 'render',
