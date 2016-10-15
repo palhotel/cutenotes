@@ -229,6 +229,7 @@ body {
     background: #ffffff;
     border:1px solid #333333;
     box-shadow:0 4px 4px;
+    position:relative;
 }
 #color-picker{
  position:absolute;
