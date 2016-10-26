@@ -1,6 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>our notes</title>
     <link href="style/style.css" rel="stylesheet" />
     <script src="scripts/jquery-1.7.1.js"></script>
@@ -14,6 +15,7 @@
     <script src="scripts/ng/angular-route.js"></script>
     <script src="scripts/ng/angular-touch.js"></script>
     <script src="scripts/ng/app.js"></script>
+    <script src="scripts/vue/vue.js"></script>
     <!--if we use the node.js generate bundle we don't need more browser.js-->
     <!--<script src="scripts/react/react.js"></script>-->
     <!--<script src="scripts/react/react-with-addons.js"></script>-->
@@ -35,6 +37,7 @@
         <li><a href="#angulartest">列表</a></li>
         <li><a href="#iosswitch">开关</a></li>
         <li><a href="#mydraft">富文本</a></li>
+        <li><a href="#vueform">表单</a></li>
     </ul>
 </section>
 <section class="story1 section" id="temp">
@@ -102,6 +105,29 @@
         <div id="color-draft">there is no react</div>
 
         <script src="scripts/react/mycolorpicker.js"></script>
+    </div>
+</section>
+<section class="story8 section" id="vueform">
+    <div class="main" >
+        <div id="vueapp">
+            <p>{{ message }}</p>
+            <input v-model="message"><button v-on:click="reverseMessage">Reverse Message</button>
+            <li v-for="item in list">{{item}}</li>
+        </div>
+        <script>
+            new Vue({
+                el: '#vueapp',
+                data: {
+                    message: 'Hello Vue.js!',
+                    list: [1,2,3,4]
+                },
+                methods: {
+                    reverseMessage: function () {
+                        this.message = this.message.split('').reverse().join('')
+                    }
+                }
+            })
+        </script>
     </div>
 </section>
 

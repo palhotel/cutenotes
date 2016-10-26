@@ -99,7 +99,7 @@ body {
 
 .fix-nav {
     position: fixed;
-    width: 60%;
+    width: 66%;
     margin: 0 auto;
     border: 2px solid #c9c9c9;
     height: 60px;
@@ -235,4 +235,16 @@ body {
  position:absolute;
     left:300px;
     top:300px;
+}
+.story8 .main{
+    background: #fdc7c5;
+    padding:160px 100px;
+}
+.story8 input{
+    height:32px;
+    font-size:32px;
+    line-height: 32px;
+}
+.story8{
+    font-size:24px;
 }

@@ -3,7 +3,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import reactCSS from 'reactcss'
-import {Editor, EditorState, Modifier, RichUtils} from 'draft-js'
+import {Editor, EditorState, Modifier, RichUtils, convertToRaw} from 'draft-js'
 import { SketchPicker } from 'react-color';
 
 class ColorfulEditorExample extends React.Component {
@@ -13,7 +13,6 @@ class ColorfulEditorExample extends React.Component {
 
         this.focus = () => this.refs.editor.focus();
         this.onChange = (editorState) => this.setState({editorState});
-        this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
         this.changeColor = (color) => this._changeColor(color);
     }
     _changeColor(toggledColor){
@@ -48,7 +47,6 @@ class ColorfulEditorExample extends React.Component {
                 toggledColor
             );
         }
-
         this.onChange(nextEditorState);
 
     }

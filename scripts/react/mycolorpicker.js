@@ -43,9 +43,6 @@ var ColorfulEditorExample = function (_React$Component) {
         _this.onChange = function (editorState) {
             return _this.setState({ editorState: editorState });
         };
-        _this.toggleColor = function (toggledColor) {
-            return _this._toggleColor(toggledColor);
-        };
         _this.changeColor = function (color) {
             return _this._changeColor(color);
         };
@@ -79,7 +76,6 @@ var ColorfulEditorExample = function (_React$Component) {
             if (!currentStyle.has(toggledColor)) {
                 nextEditorState = _draftJs.RichUtils.toggleInlineStyle(nextEditorState, toggledColor);
             }
-
             this.onChange(nextEditorState);
         }
     }, {
