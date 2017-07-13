@@ -10,11 +10,10 @@
     <script src="scripts/jquery.dzpanel.js"></script>
     <script src="scripts/custom.js"></script>
     <script src="scripts/turn.js"></script>
-    <script src="scripts/ng/angular.js"></script>
-    <script src="scripts/ng/angular-animate.js"></script>
-    <script src="scripts/ng/angular-route.js"></script>
-    <script src="scripts/ng/angular-touch.js"></script>
-    <script src="scripts/ng/app.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-animate.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-route.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-touch.js"></script>
     <script src="scripts/vue/vue.js"></script>
     <!--if we use the node.js generate bundle we don't need more browser.js-->
     <!--<script src="scripts/react/react.js"></script>-->
@@ -88,9 +87,38 @@
     </div>
 </section>
 <section class="story5 section" id="angulartest">
-    <div class="main" ng-app="myapp" ng-controller="mainController">
+    <div class="main" ng-controller="mainController">
         <div class="list" ng-repeat="item in list" ng-click="remove($index);">Name:{{item.name}}, Age:{{item.age}}</div>
     </div>
+
+    <script>
+        setTimeout(function(){
+
+            console.log('angular.ready');
+            var app = angular.module('myapp', ['ngRoute', 'ngAnimate', 'ngTouch']);
+
+            app.controller('mainController', ['$scope', function($scope){
+                $scope.list = [{
+                    name: 'Tom', age: 18
+                },{
+                    name: 'Amy', age: 17
+                },{
+                    name: 'Joy', age: 18
+                },{
+                    name: 'Jay', age: 18
+                },{
+                    name: 'Joe', age: 18
+                },{
+                    name: 'Nil', age: 18
+                }];
+                $scope.remove = function(idx){
+                    _.remove($scope.list, function (item) { return item === $scope.list[idx]; });
+                }
+            }]);
+
+            angular.bootstrap(document.getElementById('angulartest'), ['myapp']);
+        }, 400);
+    </script>
 </section>
 <section class="story6 section" id="iosswitch">
     <!--http://www.daqianduan.com/4548.html-->
