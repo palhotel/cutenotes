@@ -15,6 +15,7 @@
     <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-route.js"></script>
     <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-touch.js"></script>
     <script src="scripts/vue/vue.js"></script>
+    <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
     <!--if we use the node.js generate bundle we don't need more browser.js-->
     <!--<script src="scripts/react/react.js"></script>-->
     <!--<script src="scripts/react/react-with-addons.js"></script>-->
@@ -37,6 +38,7 @@
         <li><a href="#iosswitch">开关</a></li>
         <li><a href="#mydraft">富文本</a></li>
         <li><a href="#vueform">表单</a></li>
+        <li><a href="#three">WebGL</a></li>
     </ul>
 </section>
 <section class="story1 section" id="temp">
@@ -136,7 +138,7 @@
     </div>
 </section>
 <section class="story8 section" id="vueform">
-    <div class="main" >
+    <div class="main">
         <div id="vueapp">
             <p>{{ message }}</p>
             <input v-model="message"><button v-on:click="reverseMessage">Reverse Message</button>
@@ -155,6 +157,65 @@
                     }
                 }
             })
+        </script>
+    </div>
+</section>
+<section class="story9 section" id="three">
+    <div class="main">
+        <script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            camera.position.z = 30;
+
+            var renderer = new THREE.WebGLRenderer( { antialias: true } );
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0xfff7ae, 1 );
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+
+            document.querySelector('#three .main').appendChild( renderer.domElement );
+
+            var geometry = new THREE.CylinderGeometry( 5, 5, 20, 32 );
+            var material = new THREE.MeshNormalMaterial( {color: 0x33dd33} );
+            var cylinder = new THREE.Mesh( geometry, material );
+            scene.add( cylinder );
+
+            var render = function () {
+                requestAnimationFrame( render );
+                renderer.render( scene, camera );
+            };
+
+            var isRot = false;
+            var lastPos = {
+                clientX: 0,
+                clientY: 0
+            };
+            window.addEventListener('mousedown', function(e){
+                isRot = true;
+                lastPos.clientX = e.clientX;
+                lastPos.clientY = e.clientY;
+            });
+            window.addEventListener('mouseup', function(e){
+                isRot = false;
+            });
+            window.addEventListener('mousemove', function(e){
+                if(isRot === true){
+                    if(e.clientX > lastPos.clientX){
+                        cylinder.rotation.x += 0.1;
+                    } else if(e.clientX < lastPos.clientX){
+                        cylinder.rotation.x += -0.1;
+                    }
+
+                    if(e.clientY > lastPos.clientY){
+                        cylinder.rotation.z += 0.1;
+                    } else if(e.clientY < lastPos.clientY){
+                        cylinder.rotation.z += -0.1;
+                    }
+                }
+            });
+
+            render();
         </script>
     </div>
 </section>
