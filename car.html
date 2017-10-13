@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模仿G7网站，不依赖其他类库</title>
+    <style>
+        html{
+            height:100%;
+            width:100%;
+        }
+        body{
+            margin:0;
+            width:100%;
+            height:100%;
+        }
+        header{
+            height:auto;
+        }
+        footer.footer{
+            background: #3c2280;
+            height: 100px;
+            position:static;
+            color: #ffffff;
+            text-align:center;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header.logo{
+            border-top:12px solid #3c2280;
+            display: flex;
+            align-items:center;
+            padding:22px;
+        }
+        .inline-block{
+            display:inline-flex;
+        }
+        nav .upper{
+            flex-basis:100%;
+        }
+        nav .upper li{
+            display: inline-block;
+            list-style: none;
+            font-size:1.5rem;
+            margin:0 0.5rem;
+            cursor:pointer;
+        }
+        nav .upper > li{
+            position:relative;
+            border-bottom:2px solid #ffffff;
+        }
+        nav .upper > li:hover{
+            border-bottom: 2px solid #ffcc00;
+        }
+        ul.sub{
+            visibility:hidden;
+            position:absolute;
+            width:200px;
+            left:0;
+            padding:0;
+            box-shadow:0 2px #cccccc;
+            opacity: 0.8;
+            background: #ffffff;
+            transition:0.1s ease all;
+            top: 1.5rem;
+            z-index:100;
+        }
+        ul.sub li {
+            font-size:1.0rem;
+            margin:0;
+            display: block;
+            height:1.5rem;
+            line-height:1.5rem;
+        }
+        .banner{
+            flex-basis:40%;
+        }
+        .contact{
+            justify-content: flex-end;
+            flex-basis:20%;
+            align-items:center;
+        }
+        .contact span{
+            display: inline-flex;
+            height:100%;
+            font-size:1.2rem;
+            margin-left:10px;
+            color:#3c22ff;
+        }
+        .ad{
+            height:400px;
+        }
+        .ad .img{
+            height:100%;
+            overflow:hidden;
+            background-image:url("image/ppt1.jpg");
+            background-position: -320px 0;
+            background-repeat: no-repeat;
+            position:relative;
+            transition:0.2s linear all;
+        }
+        .ad .arrow{
+            position:absolute;
+            top:10rem;
+            opacity: 0.3;
+            cursor:pointer;
+        }
+        .ad .arrow:hover{
+            opacity: 0.7;
+        }
+        .left-arrow{
+            width: 0;
+            height: 0;
+            border-top: 30px solid transparent;
+            border-right: 60px solid #eeffee;
+            border-bottom: 30px solid transparent;
+            left:2rem;
+        }
+        .right-arrow{
+            width: 0;
+            height: 0;
+            border-top: 30px solid transparent;
+            border-left: 60px solid #eeffee;
+            border-bottom: 30px solid transparent;
+            right:2rem;
+        }
+
+        .service{
+            padding: 2rem 0;
+            height:100%;
+        }
+        .section-title{
+            height:4rem;
+            width:100%;
+            text-align:center;
+            font-size:2rem;
+            line-height:4rem;
+        }
+        .down-arrow{
+            width:0;
+            height:0;
+            border-top:16px #666666 solid;
+            border-left: 8px solid transparent;
+            border-right:8px solid transparent;
+            margin:0 auto;
+        }
+        .card-window{
+            display:flex;
+            justify-content: space-around;
+            margin: 18px 0;
+        }
+        .card{
+            width:360px;
+            height:480px;
+        }
+        .card-header{
+            width:100%;
+            height: 200px;
+            background: url('image/card.jpg') no-repeat;
+            transition:0.2s ease background;
+        }
+        .card-header:hover{
+            background: url('image/icon.png') no-repeat;
+            background-color:#3c66cc;
+            background-position: 120px 40px;
+        }
+        .card-title{
+            font-size:1.5rem;
+            color:#333333;
+        }
+        .card-text{
+            color:#666666;
+            margin: 4px 0;
+        }
+        button.more{
+            width:100px;
+            height:40px;
+            border-radius: 4px 4px;
+            background: #3c2280;
+            color:#ffffff;
+        }
+        .customer{
+            background:#ccccff;
+            height:400px;
+        }
+        .logo-table{
+            display:flex;
+            padding:44px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .customer-logo{
+            background:url('image/ems.png') no-repeat;
+            width:88px;
+            height:88px;
+            transition:0.3s linear all;
+        }
+        .customer-logo:hover{
+            transform: rotateY(180deg);
+        }
+        .beforescroll{
+            opacity: 0;
+            transition:0.3s linear all;
+            margin-top:22px;
+        }
+    </style>
+</head>
+<body>
+<header class="logo">
+    <div class="banner inline-block">
+        <img src="image/logo.png" />
+    </div>
+    <nav class="inline-block">
+        <ul class="upper">
+            <li>
+                <a class="chanpin">产品</a>
+                <ul class="sub">
+                    <li>智能化车队</li>
+                    <li>智能化车队</li>
+                    <li>智能化车队</li>
+                </ul>
+            </li>
+            <li>解决方案</li>
+            <li>服务</li>
+            <li>关于</li>
+            <li>商城</li>
+        </ul>
+    </nav>
+    <div class="contact inline-block">
+        全国客服热线:<span>400-301-0000</span>
+    </div>
+</header>
+<main>
+    <div class="ad">
+        <div class="img">
+            <div class="left-arrow arrow"></div>
+            <div class="right-arrow arrow"></div>
+        </div>
+    </div>
+    <div class="service">
+        <div class="section-title">产品即服务</div>
+        <div class="down-arrow"></div>
+        <div class="card-window">
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-title">智能化车队</div>
+                <div class="card-text">借助智能物联技术,基于国际领先的Argus智能算法，帮助车队施行智能化时效、安全、成本的管理。G7-007运营管理系统，旨在将全业务流程管理从人工操作逐渐转变为自动化运营，通过在途异常实时报警，智能取证判责等功能帮助车队管理实现降本增效；G7-007安全管理系统，旨在强化多维度、全流程的车队安全管理，通过在途实时风险预警，人工双重干预，智能安全分析报告等功能全面降低事故率。</div>
+                <div class="card-footer"><button class="more">查看更多</button></div>
+            </div>
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-title">智能化车队</div>
+                <div class="card-text">借助智能物联技术,基于国际领先的Argus智能算法，帮助车队施行智能化时效、安全、成本的管理。G7-007运营管理系统，旨在将全业务流程管理从人工操作逐渐转变为自动化运营，通过在途异常实时报警，智能取证判责等功能帮助车队管理实现降本增效；G7-007安全管理系统，旨在强化多维度、全流程的车队安全管理，通过在途实时风险预警，人工双重干预，智能安全分析报告等功能全面降低事故率。</div>
+                <div class="card-footer"><button class="more">查看更多</button></div>
+            </div>
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-title">智能化车队</div>
+                <div class="card-text">借助智能物联技术,基于国际领先的Argus智能算法，帮助车队施行智能化时效、安全、成本的管理。G7-007运营管理系统，旨在将全业务流程管理从人工操作逐渐转变为自动化运营，通过在途异常实时报警，智能取证判责等功能帮助车队管理实现降本增效；G7-007安全管理系统，旨在强化多维度、全流程的车队安全管理，通过在途实时风险预警，人工双重干预，智能安全分析报告等功能全面降低事故率。</div>
+                <div class="card-footer"><button class="more">查看更多</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="customer">
+        <div class="section-title">我们的客户</div>
+        <div class="down-arrow"></div>
+        <div class="logo-table beforescroll">
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+            <div class="customer-logo"></div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+使用CSS Flex布局，实现水平垂直居中
+</footer>
+</body>
+<script>
+    //下拉菜单
+    var menu = document.querySelector('.chanpin');
+    menu.addEventListener('mouseover', function(e){
+        var sub = e.target.nextElementSibling;
+        if(sub){
+            sub.style.visibility = 'visible';
+            sub.style.top = '2rem';
+        }
+    });
+    menu.addEventListener('mouseout', function(e){
+        var sub = e.target.nextElementSibling;
+        if(sub){
+            sub.style.visibility = 'hidden';
+            sub.style.top = '1.5rem';
+        }
+    });
+    //幻灯片
+    var pics = [
+        'image/ppt1.jpg', 'image/ppt2.jpg', 'image/ppt3.jpg'
+    ];
+    var idx = 0;
+    var pptGoHead = function(){
+        idx ++;
+        idx = idx === pics.length ? 0 : idx;
+        document.querySelector('.ad .img').style.backgroundImage = 'url("' + pics[idx] + '")';
+    };
+    var pptGoBack = function(){
+        idx --;
+        idx = idx < 0 ? 0 : idx;
+        document.querySelector('.ad .img').style.backgroundImage = 'url("' + pics[idx] + '")';
+    };
+    var pptInterval = setInterval(function(){
+        pptGoHead();
+    }, 3000);
+    document.querySelector('.left-arrow').addEventListener('click', function(){
+        pptGoBack();
+    });
+    document.querySelector('.right-arrow').addEventListener('click', function(){
+        pptGoHead();
+    });
+
+    var scrollElem = document.querySelector('.customer .beforescroll');
+    window.addEventListener('scroll', function(e){
+        if(window.scrollY + 400>= scrollElem.offsetTop){
+            scrollElem.style.opacity = 1;
+            scrollElem.style.marginTop = 0;
+        }
+    });
+</script>
+</html>
