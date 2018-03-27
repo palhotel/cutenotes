@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Wedding</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html,body{
+            margin:0;
+            padding:0;
+            height:100%;
+            background:#333333;
+        }
+        .section{
+            width:100%;
+            height:100%;
+            position:relative;
+        }
+        .section .next{
+            position:absolute;
+            width:100%;
+            text-align:center;
+            bottom:1rem;
+        }
+        .section .next i{
+            color:rgba(255, 255, 255, 0.8);
+            font-size:4rem;
+        }
+        .fixedup{
+            position:fixed;
+            right:1rem;
+            bottom:1rem;
+        }
+        .fixedup i{
+            font-size:4rem;
+            color:#ffffcc;
+        }
+        .fixedup i:hover{
+            color:#ffff00;
+        }
+        .fixedmusic{
+            position:fixed;
+            right:2rem;
+            top:2rem;
+        }
+        .fixedmusic i{
+            font-size:4rem;
+            color:#ffffff;
+        }
+        .footer{
+            text-align:center;
+            width:100%;
+            color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+<section class="section" style="background:#555555;">
+    <div class="next">
+        <i class="fa fa-arrow-down"></i>
+    </div>
+</section>
+<section class="section" style="background:#ffcccc;">
+    <div class="next">
+        <i class="fa fa-arrow-down"></i>
+    </div>
+</section>
+<section class="section" style="background:#ccffcc;">
+    <div class="next">
+        <i class="fa fa-arrow-down"></i>
+    </div>
+</section>
+<section class="section">
+</section>
+<div class="footer">
+    定做我的婚礼幻灯片
+</div>
+<div class="fixedup">
+    <i class="fa fa-eject"></i>
+</div>
+<div class="fixedmusic">
+    <i class="fa fa-music fa-spin"></i>
+    <audio id="audio" class="media-audio" src="music/duanwu.mp3" preload loop="loop"></audio>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.fixedup').click(function(){
+            var ms = parseInt(window.scrollY / 4);
+            console.log(window.scrollY, ms);
+            $('html, body').animate({
+                scrollTop: 0
+            }, ms, 'linear');
+        });
+        $('.next').click(function () {
+            var height = window.innerHeight;
+            var targetScroll = window.scrollY + height;
+            var ms = parseInt(height / 3);
+            $('html, body').animate({
+                scrollTop: targetScroll
+            }, ms, 'linear');
+        });
+        $('.fixedmusic').click(function () {
+            var audio = document.getElementById('audio');
+            if($('.fixedmusic i').hasClass('fa-spin')){
+                audio.pause();
+                $('.fixedmusic i').removeClass('fa-spin');
+            } else {
+                audio.play();
+                $('.fixedmusic i').addClass('fa-spin');
+            }
+        });
+
+        var audio = document.getElementById('audio');
+        audio.play();
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            audio.play();
+        }, false);
+    });
+</script>
+</body>
+</html>
