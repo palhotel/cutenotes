@@ -1,0 +1,98 @@
+body{
+    background:#409EFF;
+    overflow:hidden;
+    color:white;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+.box {
+    text-align:center;
+    position:relative;
+    overflow: hidden;
+}
+.box .el-col{
+    height:6rem;
+    width:6rem;
+    background: rgba(144, 147, 153, 0.5);
+    border: 1px solid #ededed;
+    z-index:200;
+}
+.down{
+    text-align:center;
+}
+.down .el-col{
+    height: 4rem;
+    margin:1px;
+}
+.topimg{
+    z-index:150;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.main-container{
+    min-height: 28rem;
+}
+.page-view{
+    width:100%;
+    position:absolute;
+    top:10%;
+    left:0;
+    background:#ffff99;
+    border:1px solid #3c22ff;
+    color:#3c2280;
+    height:80%;
+}
+.fileinput{
+    visibility: hidden;
+    width:0;
+    height:0;
+}
+.nine-box{
+    position:relative;
+}
+.two-box{
+    position:relative;
+}
+.two-box .pic{
+    width:140px;
+    height:140px;
+    background: rgba(144, 147, 153, 0.5);
+    border: 1px solid #ededed;
+    margin:0 auto;
+    z-index:200;
+    overflow:hidden;
+    position:relative;
+}
+.super-img{
+    overflow:hidden;
+    position:relative;
+}
+.two-box .choose{
+    line-height:100px;
+    height:120px;
+}
+.fixedfooter{
+    position:absolute;
+    height:44px;
+    padding-top:10px;
+    bottom:0;
+}
+.center{
+    text-align:center;
+}
+.hidecanvas{
+    width:300px;
+    height:300px;
+    position:absolute;
+    left: 900px;
+    border:1px solid #cccccc;
+    top:0
+}
+.gluecanvas{
+    width:300px;
+    height:900px;
+    position:absolute;
+    left:900px;
+    top:300px;
+    border:1px solid #cccccc;
+}

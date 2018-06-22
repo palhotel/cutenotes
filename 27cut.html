@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>27cut朋友圈拼图神器</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="style/cut.css">
+</head>
+<body>
+
+<div id="app">
+    <el-container>
+        <el-header>
+            <h2 style="text-align:center;">27CUT</h2>
+        </el-header>
+        <el-main class="main-container">
+
+            <el-button v-on:click="showPageView = !showPageView;">开始制作吧？</el-button>
+            <page-view v-if="showPageView"></page-view>
+        </el-main>
+        <el-footer class="fixedfooter">
+            you@likeada.com
+        </el-footer>
+    </el-container>
+</div>
+
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/x-template" id="nine-box-template">
+    <div class="nine-box">
+        <div>
+
+            <el-button plain v-on:click="chooseFile();">选取封面</el-button>
+            <input type="file" class="fileinput" multiple size="80"
+                   accept=".png, .jpg, .jpeg" v-on:change="showImage();"/>
+            <el-button icon="el-icon-refresh" circle v-on:click="reset();"></el-button>
+        </div>
+        <br/>
+        <div class="box" v-on:touchstart="touchStart($event);"
+             v-on:touchmove="touchMove($event);" v-on:touchend="touchEnd($event);">
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col class="box1"><div></div></el-col>
+                <el-col class="box2"><div></div></el-col>
+                <el-col class="box3"><div></div></el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col class="box4"><div></div></el-col>
+                <el-col class="box5"><div></div></el-col>
+                <el-col class="box6"><div></div></el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col class="box7"><div></div></el-col>
+                <el-col class="box8"><div></div></el-col>
+                <el-col class="box9"><div></div></el-col>
+            </el-row>
+            <img class="topimg" style="position:absolute;top:0;left:0;"/>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="page-view-template">
+    <div class="page-view">
+        <div class="center"><h3>第{{milestone}}步{{title}}</h3></div>
+
+        <nine-box v-show="step===0"></nine-box>
+        <two-box v-show="step===1"></two-box>
+        <two-box v-show="step===2"></two-box>
+        <two-box v-show="step===3"></two-box>
+        <two-box v-show="step===4"></two-box>
+        <two-box v-show="step===5"></two-box>
+        <two-box v-show="step===6"></two-box>
+        <two-box v-show="step===7"></two-box>
+        <two-box v-show="step===8"></two-box>
+        <two-box v-show="step===9"></two-box>
+        <div v-show="step===10" class="down">
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col><a v-bind:href="images[0].src" download="likeada1">下载第1张</a></el-col>
+                <el-col><a v-bind:href="images[1].src" download="likeada2">下载第2张</a></el-col>
+                <el-col><a v-bind:href="images[2].src" download="likeada3">下载第3张</a></el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col><a v-bind:href="images[3].src" download="likeada4">下载第4张</a></el-col>
+                <el-col><a v-bind:href="images[4].src" download="likeada5">下载第5张</a></el-col>
+                <el-col><a v-bind:href="images[5].src" download="likeada6">下载第6张</a></el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col><a v-bind:href="images[6].src" download="likeada7">下载第7张</a></el-col>
+                <el-col><a v-bind:href="images[7].src" download="likeada8">下载第8张</a></el-col>
+                <el-col><a v-bind:href="images[8].src" download="likeada9">下载第9张</a></el-col>
+            </el-row>
+        </div>
+        <div class="center">
+            <el-button v-on:click="prevStep();">上一步</el-button>
+            <el-button type="primary" v-show="step < 9" v-on:click="nextStep();">下一步</el-button>
+            <el-button type="primary" v-show="step === 9" v-on:click="nextStep();">生成图片</el-button>
+        </div>
+        <canvas class="hidecanvas" width="300" height="300"></canvas>
+        <canvas class="gluecanvas" width="300" height="900"></canvas>
+    </div>
+</script>
+<script type="text/x-template" id="two-box-template">
+    <div class="two-box">
+        <main>
+            <super-img class="top"></super-img>
+            <super-img class="bottom"></super-img>
+        </main>
+    </div>
+</script>
+<script type="text/x-template" id="super-img-template">
+    <div class="super-img">
+        <el-row type="flex" class="row-bg" justify="center">
+            <el-col :span="14">
+                <div class="pic" v-on:touchstart="touchStart($event);" v-on:touchmove="touchMove($event);" v-on:touchend="touchEnd($event);">
+                    <input type="file" class="fileinput" multiple size="80" accept=".png, .jpg, .jpeg" v-on:change="showImage();"/>
+                    <img class="topimg" style="position:absolute;top:0;left:0;"/>
+                </div>
+            </el-col>
+            <el-col :span="4">
+                <div v-on:click="chooseFile" class="choose">选择</div>
+            </el-col>
+        </el-row>
+    </div>
+
+</script>
+<script>
+    Vue.component('nine-box', {
+        template : '#nine-box-template',
+        data: function(){
+            return {
+                touchState:{
+                    isTouched: false,
+                    startX: 0,
+                    StartY: 0,
+                    StartTime: new Date(),
+                    targetX: 0,
+                    targetY: 0
+                }
+            };
+        },
+        methods:{
+            chooseFile: function(){
+                var input = document.querySelector('.nine-box .fileinput');
+                input.click();
+            },
+            showImage: function () {
+                var input = document.querySelector('.nine-box .fileinput');
+                var img = document.querySelector('.box .topimg');
+                var box = document.querySelector('.nine-box .box');
+                var widthHeight = box.clientHeight;
+
+                var curFiles = input.files;
+                if(curFiles && curFiles.length > 0){
+                    var file = curFiles[0];
+                    var memImage = new Image();
+                    memImage.src = window.URL.createObjectURL(file);
+                    memImage.onload = function () {
+                        var minWidthOrHeight = Math.min(memImage.height, memImage.width);
+                        if(minWidthOrHeight > 1.2 * widthHeight || minWidthOrHeight < widthHeight){
+                            memImage.width = (widthHeight / minWidthOrHeight + 0.1) * memImage.width;
+                            img.width = memImage.width;
+                        }
+                        img.src = memImage.src;
+                        img.style.top = '0px';
+                        img.style.left = '0px';
+                    };
+                }
+            },
+            touchStart: function (e) {
+                this.touchState.isTouched = true;
+                this.touchState.StartTime = new Date();
+                this.touchState.startX = e.touches[0].pageX;
+                this.touchState.startY = e.touches[0].pageY;
+            },
+            touchMove: function (e) {
+                if(this.touchState.isTouched){
+                    var nowX = e.touches[0].pageX;
+                    var nowY = e.touches[0].pageY;
+                    var img = document.querySelector('.box .topimg');
+                    var box = document.querySelector('.nine-box .box');
+
+                    var imgLeft = parseInt(img.style.left.replace('px', ''));
+                    var imgTop = parseInt(img.style.top.replace('px', ''));
+                    var targetX = (nowX - this.touchState.startX) + imgLeft;
+                    var targetY = (nowY - this.touchState.startY) + imgTop;
+
+                    this.touchState.targetX = targetX;
+                    this.touchState.targetY = targetY;
+                }
+            },
+            touchEnd: function (e) {
+                this.touchState.isTouched = false;
+                var img = document.querySelector('.box .topimg');
+                img.style.left = this.touchState.targetX + 'px';
+                img.style.top = this.touchState.targetY + 'px';
+            },
+            reset: function () {
+                var img = document.querySelector('.box .topimg');
+                img.style.top = '0px';
+                img.style.left = '0px';
+            }
+        }
+    });
+    Vue.component('page-view', {
+        template : '#page-view-template',
+        data: function(){
+            return {
+                step: 0,
+                titles: ['选择封面',
+                    '选择第1组图片', '选择第2组图片', '选择第3组图片',
+                    '选择第4组图片', '选择第5组图片', '选择第6组图片',
+                    '选择第7组图片', '选择第8组图片', '选择第9组图片',
+                    '下载图片'
+                ],
+                images:[
+                    {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null},
+                    {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null},
+                    {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null}, {img1:null, img2:null, img3:null}
+                ],
+                BASEUNIT: 300
+            };
+        },
+        methods: {
+            nextStep: function () {
+                if(this.step === 0){
+                    var elemRoot = document.querySelector('.page-view');
+                    var coverImg = elemRoot.querySelector('.nine-box .topimg');
+                    var nineBoxs = [];
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box1'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box2'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box3'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box4'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box5'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box6'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box7'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box8'));
+                    nineBoxs.push(elemRoot.querySelector('.nine-box .box9'));
+
+                    var canvas = document.querySelector('.hidecanvas');
+                    var ctx = canvas.getContext('2d');
+                    for(var i = 0; i < nineBoxs.length; i++){
+                        var box = nineBoxs[i];
+                        this.generateCover(box, coverImg, ctx, i);
+                        this.images[i].img2 = ctx.getImageData(0, 0, this.BASEUNIT, this.BASEUNIT);
+                    }
+                } else if(this.step <= 9){
+                    var elemRoot = document.querySelector('.page-view');
+                    var twoBoxes = elemRoot.querySelectorAll('.two-box');
+                    window.you = twoBoxes;
+                    var thisElem = twoBoxes[this.step - 1];
+
+                    var box1 = thisElem.querySelector('.top .pic');
+                    var box2 = thisElem.querySelector('.bottom .pic');
+
+                    var img1 = thisElem.querySelector('.top .topimg');
+                    var img2 = thisElem.querySelector('.bottom .topimg');
+
+
+                    var canvas = document.querySelector('.hidecanvas');
+                    var ctx = canvas.getContext('2d');
+                    this.generateContent(box1, img1, ctx);
+                    this.images[this.step - 1].img1 = ctx.getImageData(0, 0, this.BASEUNIT, this.BASEUNIT);
+                    this.generateContent(box2, img2, ctx);
+                    this.images[this.step - 1].img3 = ctx.getImageData(0, 0, this.BASEUNIT, this.BASEUNIT);
+                }
+                if(this.step === 9){
+                    this.glue();
+                }
+                this.step = this.step >= 10 ? 10 : this.step + 1;
+            },
+            prevStep: function () {
+                this.step = this.step <= 0 ? 0 : this.step - 1;
+            },
+            generateCover: function (box, img, ctx, idx) {
+                var y = box.offsetTop - img.offsetTop;
+                var x = box.offsetLeft - img.offsetLeft;
+                var zoomFactor = img.clientHeight / img.naturalHeight;
+                y += parseInt(idx / 3) * box.offsetHeight;
+                x = x < 0 ? 0 : x;
+                y = y < 0 ? 0 : y;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, this.BASEUNIT, this.BASEUNIT);
+                ctx.drawImage(img,
+                    x / zoomFactor, y / zoomFactor,
+                    box.clientWidth /zoomFactor, box.clientWidth / zoomFactor,
+                    0, 0, this.BASEUNIT, this.BASEUNIT);
+            },
+            generateContent: function (box, img, ctx) {
+                var y = img.offsetTop;
+                var x = 0 - img.offsetLeft;
+                var zoomFactor = img.clientHeight / img.naturalHeight;
+                x = x < 0 ? 0 : x;
+                y = y < 0 ? 0 : y;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, this.BASEUNIT, this.BASEUNIT);
+                ctx.drawImage(img,
+                    x / zoomFactor, y / zoomFactor,
+                    box.clientWidth /zoomFactor, box.clientWidth / zoomFactor,
+                    0, 0, this.BASEUNIT, this.BASEUNIT);
+            },
+            glue: function () {
+                var canvas = document.querySelector('.gluecanvas');
+                var ctx = canvas.getContext('2d');
+                var BASEUNIT = this.BASEUNIT;
+                this.images.forEach(function(item){
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, BASEUNIT, BASEUNIT * 3);
+
+                    ctx.putImageData(item.img1, 0, 0);
+                    ctx.putImageData(item.img2, 0, BASEUNIT);
+                    ctx.putImageData(item.img3, 0, BASEUNIT * 2);
+                    item.src = canvas.toDataURL();
+                });
+            },
+            download: function (id) {
+
+            }
+        },
+        computed:{
+            title: function () {
+                return this.titles[this.step];
+            },
+            milestone: function () {
+                if(this.step === 0){
+                    return '1';
+                } else if(this.step >= 1 && this.step <= 9){
+                    return '2';
+                } else {
+                    return '3';
+                }
+            }
+        }
+    });
+    Vue.component('two-box', {
+        template: '#two-box-template'
+    });
+    Vue.component('super-img', {
+        template: '#super-img-template',
+        data: function(){
+            return {
+                touchState:{
+                    isTouched: false,
+                    startX: 0,
+                    StartY: 0,
+                    StartTime: new Date(),
+                    targetX: 0,
+                    targetY: 0
+                },
+                inputElem: null,
+                imgElem: null,
+                boxElem: null
+            };
+        },
+        methods: {
+            chooseFile: function(event){
+                var parent = event.target.parentNode.parentNode;
+                var input = parent.querySelector('input[type="file"]');
+                var img = parent.querySelector('.topimg');
+                var box = parent.querySelector('.pic');
+                this.boxElem = box;
+                this.inputElem = input;
+                this.imgElem = img;
+                this.inputElem.click();
+            },
+            showImage: function () {
+                if(!this.inputElem || !this.imgElem){
+                    return;
+                }
+                var input = this.inputElem;
+                var img = this.imgElem;
+                var box = this.boxElem;
+
+                var widthHeight = box.clientHeight;
+
+                var curFiles = input.files;
+                if(curFiles && curFiles.length > 0){
+                    var file = curFiles[0];
+                    var memImage = new Image();
+                    memImage.src = window.URL.createObjectURL(file);
+                    memImage.onload = function () {
+                        var minWidthOrHeight = Math.min(memImage.height, memImage.width);
+
+                        if(minWidthOrHeight > 1.2 * widthHeight || minWidthOrHeight < widthHeight){
+                            memImage.width = (widthHeight / minWidthOrHeight) * memImage.width;
+                            img.width = memImage.width;
+                        }
+                        img.src = memImage.src;
+                        img.style.top = '0px';
+                        img.style.left = '0px';
+                    };
+                }
+            },
+            touchStart: function (e) {
+                if(!this.inputElem || !this.imgElem){
+                    return;
+                }
+                this.touchState.isTouched = true;
+                this.touchState.StartTime = new Date();
+                this.touchState.startX = e.touches[0].pageX;
+                this.touchState.startY = e.touches[0].pageY;
+            },
+            touchMove: function (e) {
+                if(!this.inputElem || !this.imgElem){
+                    return;
+                }
+                if(this.touchState.isTouched){
+                    var img = this.imgElem;
+                    var box = this.boxElem;
+
+                    var nowX = e.touches[0].pageX;
+                    var nowY = e.touches[0].pageY;
+
+                    var imgLeft = parseInt(img.style.left.replace('px', ''));
+                    var imgTop = parseInt(img.style.top.replace('px', ''));
+                    var targetX = (nowX - this.touchState.startX) + imgLeft;
+                    var targetY = (nowY - this.touchState.startY) + imgTop;
+
+                    this.touchState.targetX = targetX;
+                    this.touchState.targetY = targetY;
+                }
+            },
+            touchEnd: function (e) {
+                if(!this.inputElem || !this.imgElem){
+                    return;
+                }
+                this.touchState.isTouched = false;
+                var img = this.imgElem;
+
+                img.style.left = this.touchState.targetX + 'px';
+                img.style.top = this.touchState.targetY + 'px';
+            }
+        }
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                visible: false,
+                showPageView: false
+            };
+        },
+        computed:{
+
+        },
+        methods:{
+            alert: function () {
+            }
+        }
+    });
+</script>
+</html>
